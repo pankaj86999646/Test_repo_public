@@ -1,0 +1,16 @@
+jobs:
+  include:
+    - os: linux
+      dist: xenial
+      name: SBOM Ruby
+      language: ruby
+      script:
+        - gem build ./sbom/ruby/hello_world.gemspec
+      addons:
+        sbom:
+          on:
+            branch: 'main'
+          run_phase: 'after_success'
+          output_format: 'cyclonedx-json'
+          input_dir: '/sbom/ruby'
+          output_dir: '/sbom/ruby'
