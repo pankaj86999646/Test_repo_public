@@ -1,10 +1,16 @@
 jobs:
   include:
     - os: linux
-      language: python
-      python:
-       - "3.8"
-      arch: amd64
-      dist: focal
+      dist: xenial
+      name: SBOM Ruby
+      language: ruby
       script:
-        - python hello_world.py
+        - gem build ./sbom/ruby/hello_world.gemspec
+      addons:
+        sbom:
+          on:
+            branch: 'main'
+          run_phase: 'after_success'
+          output_format: 'cyclonedx-json'
+          input_dir: '/sbom/ruby'
+          output_dir: '/sbom/ruby'
